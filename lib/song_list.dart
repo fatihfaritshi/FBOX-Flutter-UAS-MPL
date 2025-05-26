@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'song_detail.dart';
 import 'user_profile.dart';
 
-class SongListPage extends StatelessWidget {
+class SongListPage extends StatefulWidget {
   final String genre;
 
   const SongListPage({super.key, required this.genre});
 
+  @override
+  State<SongListPage> createState() => _SongListPageState();
+}
+
+class _SongListPageState extends State<SongListPage>
+    with SingleTickerProviderStateMixin {
+  // Example song list (you can replace this with your actual data)
   final List<Map<String, String>> songs = const [
     {
       "title": "/ forever more /",
@@ -219,17 +226,67 @@ class SongListPage extends StatelessWidget {
       "composer": "Unknown",
       "album": "Melo Movie OST",
     },
+    {
+      "title": "Someday It's Time to Shine",
+      "artist": "Mido and Falasol",
+      "genre": "K-Pop",
+      "image": "assets/toshine.png",
+      "year": "2025",
+      "songwriter": "Lee Jun Hyung, MAO",
+      "composer": "Lee Jun Hyung",
+      "album": "Resident Playbook OST",
+    },
   ];
+
+  late List<bool> isFavoriteList;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavoriteList = List<bool>.filled(songs.length, false);
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+      lowerBound: 0.7,
+      upperBound: 1.0,
+    );
+
+    _scaleAnimation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeOut);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void toggleFavorite(int index) async {
+    await _animationController.forward();
+    await _animationController.reverse();
+
+    setState(() {
+      isFavoriteList[index] = !isFavoriteList[index];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final filteredSongs =
-        songs.where((song) => song['genre'] == genre).toList();
+        songs.where((song) => song['genre'] == widget.genre).toList();
+
+    // Ensure isFavoriteList matches filteredSongs length (in case of filtering)
+    if (isFavoriteList.length != filteredSongs.length) {
+      isFavoriteList = List<bool>.filled(filteredSongs.length, false);
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Genre: $genre',
+          'Genre: ${widget.genre}',
           style: const TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
@@ -251,6 +308,8 @@ class SongListPage extends StatelessWidget {
         itemCount: filteredSongs.length,
         itemBuilder: (context, index) {
           final song = filteredSongs[index];
+          final isFavorite = isFavoriteList[index];
+
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -259,14 +318,14 @@ class SongListPage extends StatelessWidget {
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Image.asset(
-                song['image']!,
+                song['image'] ?? '',
                 width: 50,
                 height: 70,
                 fit: BoxFit.cover,
               ),
             ),
             title: Text(
-              song['title']!,
+              song['title'] ?? '',
               style: const TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
@@ -277,15 +336,27 @@ class SongListPage extends StatelessWidget {
               '${song['artist']} • ${song['album']} • ${song['year']}',
               style: const TextStyle(fontFamily: 'Montserrat', fontSize: 13),
             ),
+            trailing: ScaleTransition(
+              scale: _scaleAnimation,
+              child: IconButton(
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: isFavorite ? const Color.fromARGB(255, 41, 50, 139) : Colors.grey,
+                ),
+                onPressed: () {
+                  toggleFavorite(index);
+                },
+                tooltip: isFavorite ? 'Remove from favorites' : 'Add to favorites',
+              ),
+            ),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder:
-                      (context) => SongDetailPage(
-                        songs: filteredSongs,
-                        currentIndex: index,
-                      ),
+                  builder: (context) => SongDetailPage(
+                    songs: filteredSongs,
+                    currentIndex: index,
+                  ),
                 ),
               );
             },

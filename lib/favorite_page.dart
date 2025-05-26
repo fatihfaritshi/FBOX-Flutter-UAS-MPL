@@ -38,15 +38,15 @@ class _FavoritePageState extends State<FavoritePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Buat Folder Baru'),
+        title: const Text('Create New Folder'),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Nama folder'),
+          decoration: const InputDecoration(hintText: 'Folder Name'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Batal'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -59,7 +59,7 @@ class _FavoritePageState extends State<FavoritePage> {
               }
               Navigator.pop(context);
             },
-            child: const Text('Buat'),
+            child: const Text('Create'),
           ),
         ],
       ),
@@ -73,15 +73,15 @@ class _FavoritePageState extends State<FavoritePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Nama Folder'),
+        title: const Text('Edit Folder Name'),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Nama baru folder'),
+          decoration: const InputDecoration(hintText: 'New Folder Name'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Batal'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -94,7 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
               }
               Navigator.pop(context);
             },
-            child: const Text('Simpan'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -123,95 +123,91 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
         ],
       ),
-      body: folderList.isEmpty
-          ? const Center(
-              child: Text(
-                'Belum ada folder favorit 😅',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black54,
-                  fontFamily: 'Montserrat',
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 5, 13, 67),
+              Color.fromARGB(255, 41, 50, 139),
+              Color.fromARGB(255, 80, 123, 243),
+            ],
+          ),
+        ),
+        child: folderList.isEmpty
+            ? const Center(
+                child: Text(
+                  'No favorites added yet',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white70,
+                    fontFamily: 'Montserrat',
+                  ),
                 ),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(12),
-              child: GridView.builder(
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(12),
                 itemCount: folderList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 4 / 3,
-                ),
                 itemBuilder: (context, index) {
                   return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF4A90E2), Color(0xFF007AFF)],
+                        colors: [Color.fromARGB(255, 236, 236, 236), Color.fromARGB(255, 198, 200, 201)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
-                        )
+                          blurRadius: 6,
+                          offset: Offset(2, 3),
+                        ),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.folder,
-                            size: 48,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(height: 8),
-                          Expanded(
-                            child: Text(
-                              folderList[index],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis,
-                                color: Colors.white,
-                              ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.folder,
+                          size: 48,
+                          color: Color.fromARGB(255, 5, 13, 67),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Text(
+                            folderList[index],
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 5, 13, 67),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit, size: 20),
-                                onPressed: () => _showEditFolderDialog(index),
-                                color: Colors.white,
-                                tooltip: 'Edit',
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, size: 20),
-                                onPressed: () => _deleteFolder(index),
-                                color: Colors.white,
-                                tooltip: 'Hapus',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.edit, size: 24, color: Color.fromARGB(255, 5, 13, 67)),
+                          onPressed: () => _showEditFolderDialog(index),
+                          tooltip: 'Edit',
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, size: 24, color: Color.fromARGB(255, 5, 13, 67)),
+                          onPressed: () => _deleteFolder(index),
+                          tooltip: 'Delete',
+                        ),
+                      ],
                     ),
                   );
                 },
               ),
-            ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showCreateFolderDialog,
         backgroundColor: const Color.fromARGB(255, 5, 13, 67),
         child: const Icon(Icons.create_new_folder),
-        tooltip: 'Buat Folder Baru',
+        tooltip: 'Create New Folder',
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(

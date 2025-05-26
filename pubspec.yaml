@@ -78,6 +78,7 @@ flutter:
     - assets/lm5.jpeg
     - assets/always.png
     - assets/twilight.png
+    - assets/toshine.png
 
   uses-material-design: true
 
