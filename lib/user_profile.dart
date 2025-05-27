@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'user_data.dart'; 
+import 'package:image_picker/image_picker.dart';
+import 'user_data.dart'; // pastikan UserData ada dengan field: name & favoriteGenre
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -12,6 +14,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController genreController = TextEditingController();
 
+  File? _profileImage;
+
   void _editProfile() {
     nameController.text = UserData.name;
     genreController.text = UserData.favoriteGenre;
@@ -19,37 +23,69 @@ class _UserProfilePageState extends State<UserProfilePage> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Edit Profile'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
+        return StatefulBuilder(
+          builder: (context, setStateDialog) {
+            return AlertDialog(
+              title: const Text('Edit Profile'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+                        if (picked != null) {
+                          setState(() {
+                            _profileImage = File(picked.path);
+                          });
+                          setStateDialog(() {}); // update di dalam dialog
+                        }
+                      },
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : const AssetImage('assets/fatih.png') as ImageProvider,
+                        child: const Align(
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 15,
+                            child: Icon(Icons.edit, size: 16, color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                    ),
+                    TextField(
+                      controller: genreController,
+                      decoration: const InputDecoration(labelText: 'Favorite Genre'),
+                    ),
+                  ],
+                ),
               ),
-              TextField(
-                controller: genreController,
-                decoration: const InputDecoration(labelText: 'Favorite Genre'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  UserData.name = nameController.text;
-                  UserData.favoriteGenre = genreController.text;
-                });
-                Navigator.pop(context);
-              },
-              child: const Text('Save'),
-            ),
-          ],
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      UserData.name = nameController.text;
+                      UserData.favoriteGenre = genreController.text;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -95,13 +131,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 3),
                 ),
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 80,
-                  backgroundImage: AssetImage('assets/fatih.png'),
+                  backgroundImage: _profileImage != null
+                      ? FileImage(_profileImage!)
+                      : const AssetImage('assets/fatih.png') as ImageProvider,
                 ),
               ),
               const SizedBox(height: 20),
-
               Text(
                 name,
                 style: const TextStyle(
@@ -115,10 +152,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: const TextStyle(color: Colors.white70),
               ),
               const SizedBox(height: 30),
-
               Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 15, horizontal: 25),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.35),
                   borderRadius: BorderRadius.circular(12),
@@ -175,7 +210,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ),
               const SizedBox(height: 30),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -191,10 +225,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                   ),
                   const SizedBox(width: 15),
@@ -210,10 +241,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                   ),
                 ],

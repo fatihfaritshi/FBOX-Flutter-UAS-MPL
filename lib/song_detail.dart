@@ -52,17 +52,18 @@ class _SongDetailPageState extends State<SongDetailPage>
   }
 
   void togglePlay() {
+    if (isPlaying) {
+      _scaleController.stop();
+      _rotationController.stop();
+      _scaleController.reset();
+      _rotationController.reset();
+    } else {
+      _scaleController.repeat(reverse: true);
+      _rotationController.repeat();
+    }
+
     setState(() {
       isPlaying = !isPlaying;
-      if (isPlaying) {
-        _scaleController.repeat(reverse: true);
-        _rotationController.repeat();
-      } else {
-        _scaleController.stop();
-        _rotationController.stop();
-        _scaleController.reset();
-        _rotationController.reset();
-      }
     });
   }
 
@@ -70,8 +71,7 @@ class _SongDetailPageState extends State<SongDetailPage>
     setState(() {
       currentIndex =
           (currentIndex - 1 + widget.songs.length) % widget.songs.length;
-      isPlaying =
-          false; // otomatis pause ketika pindah lagu, bisa diubah sesuai kebutuhan
+      isPlaying = false;
       _scaleController.reset();
       _rotationController.reset();
     });
@@ -104,6 +104,7 @@ class _SongDetailPageState extends State<SongDetailPage>
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
+            tooltip: 'Show song info',
             onPressed: () {
               setState(() {
                 showInfo = !showInfo;
