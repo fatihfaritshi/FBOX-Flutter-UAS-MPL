@@ -1,8 +1,41 @@
 {
-   "checksum": "e98825a74acbc3859599e4d1299a199e",
+   "checksum": "2a5d85afce3c271e9398b059c1894e7e",
    "roots": {
       "bookmark_bar": {
          "children": [ {
+            "date_added": "13392824585125040",
+            "date_last_used": "0",
+            "guid": "d95a298a-8756-4f0d-b015-60b9a95daba1",
+            "id": "303",
+            "name": "Lenovo Support",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://support.lenovo.com/",
+            "visit_count": 0
+         }, {
+            "date_added": "13392824585124780",
+            "date_last_used": "0",
+            "guid": "be34d6f6-14e3-46f3-99cb-becb4c062ccc",
+            "id": "302",
+            "name": "Lenovo",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://www.lenovo.com/",
+            "visit_count": 0
+         }, {
+            "date_added": "13392824585107120",
+            "date_last_used": "0",
+            "guid": "82c598cb-7ca1-43bd-b2bb-17967589734b",
+            "id": "301",
+            "name": "McAfee",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://www.mcafee.com/consumer/v/browserfav/lenovo.html",
+            "visit_count": 0
+         }, {
             "date_added": "13392795874681487",
             "date_last_used": "0",
             "guid": "0409f45c-e55c-4047-b5d0-6ce64154c1c7",
@@ -1952,7 +1985,7 @@
          } ],
          "date_added": "13392185834537489",
          "date_last_used": "0",
-         "date_modified": "13392795874681487",
+         "date_modified": "13392824585125040",
          "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
          "id": "1",
          "name": "Favorites bar",
@@ -1982,6 +2015,6 @@
          "type": "folder"
       }
    },
-   "sync_metadata": "CosBCg4IiIECEgh1YQMQlwEAABIAGlhIemNmbDh1MFExZkFLUGVaeWJUMmlBaWl4elNMazVhbGJ1UEpadHIwcVVvUXRQUEZ5MWtjcWpWTUpYS1ErdlN4cDNtR0Q1QkZSd3RLaXNkYVhQU2g1dz09KhhnY2RsZ3Bua1k3VjFRc0J4ZkhMdWpBPT1IA6AGABKOAQgBEokBChx5eEovNmZ2a2VjcjdrcDVFUXpCNHRXTHBkYkU9EiRmZjkxMmZmNC0xYjRjLTViYmQtODkxYi1jMmEzMzYyNTJmMGUYACAAKAAwxIvJ1uEyOKKPydbhMkCij8nW4TJKHGFSQ1dMZ2hGOWI1SW5xS0lEdnVKL2p2UWtGYz1aAGUAAAAAwj4CYAASjgEIAhKJAQocWWNTVG9udkVTUHdxQ3M0TDJjclZodjY4TDk4PRIkZmIzNzZkYmEtM2EzMy01N2I4LTlhNDYtODlmM2IxNTAyODM5GAAgACgAMMWLydbhMjjBj8nW4TJAwY/J1uEyShxvUFZraHdCUmJWNjVLQ1dSMitJT05IV29PdTg9WgBlAAAAAMI+AmAAEo4BCAMSiQEKHG5qZ0R1ODhlQ3J2WHA4NnBEN2ZIR2NxRnA4OD0SJGE2NWU4MTczLTk1YWUtNTljMS1hNmIxLTg3ZDUxODM1NjA1NxgAIAAoADDKi8nW4TI4gJDJ1uEyQICQydbhMkoceXpOQjAxY241NEE3Y1JVMHVUKy9QZ21UdFVvPVoAZQAAAADCPgJgADAAOAA=",
+   "sync_metadata": "CosBCg4IiIECEgh1YQMQlwEAABIAGlhIemNmbDh1MFExZkFLUGVaeWJUMmlBaWl4elNMazVhbGJ1UEpadHIwcVVvUXRQUEZ5MWtjcWpWTUpYS1ErdlN4cDNtR0Q1QkZSd3RLaXNkYVhQU2g1dz09KhhnY2RsZ3Bua1k3VjFRc0J4ZkhMdWpBPT1IA6AGABKOAQgDEokBChxuamdEdTg4ZUNydlhwODZwRDdmSEdjcUZwODg9EiRhNjVlODE3My05NWFlLTU5YzEtYTZiMS04N2Q1MTgzNTYwNTcYACAAKAAwyovJ1uEyOICQydbhMkCAkMnW4TJKHHl6TkIwMWNuNTRBN2NSVTB1VCsvUGdtVHRVbz1aAGUAAAAAwj4CYAASjgEIAhKJAQocWWNTVG9udkVTUHdxQ3M0TDJjclZodjY4TDk4PRIkZmIzNzZkYmEtM2EzMy01N2I4LTlhNDYtODlmM2IxNTAyODM5GAAgACgAMMWLydbhMjjBj8nW4TJAwY/J1uEyShxvUFZraHdCUmJWNjVLQ1dSMitJT05IV29PdTg9WgBlAAAAAMI+AmAAEo4BCAESiQEKHHl4Si82ZnZrZWNyN2twNUVRekI0dFdMcGRiRT0SJGZmOTEyZmY0LTFiNGMtNWJiZC04OTFiLWMyYTMzNjI1MmYwZRgAIAAoADDEi8nW4TI4oo/J1uEyQKKPydbhMkocYVJDV0xnaEY5YjVJbnFLSUR2dUovanZRa0ZjPVoAZQAAAADCPgJgADAAOAA=",
    "version": 1
 }
